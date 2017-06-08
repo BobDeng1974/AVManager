@@ -5,7 +5,7 @@
 #include "VIDEO_SDK.H"
 
 
-class CVideoPlay : public c_singleton<CVideoPlay>
+class CVideoPlay 
 {
 private:
 	IFilterGraph2	*m_pGraph;			//滤波器链表管理器
@@ -19,11 +19,14 @@ private:
 
 	DWORD				mObjectTableEntry; 
 
-public:
+private:
 	CVideoPlay();
-	virtual ~CVideoPlay();
+	~CVideoPlay();
 
 public:
+	static CVideoPlay* GetInstance();
+	static CVideoPlay* s_Instance;
+
 	virtual bool Init(HWND hWnd);		//生成滤波器链表管理器
 	virtual void Release(void);		//释放所有接口
 

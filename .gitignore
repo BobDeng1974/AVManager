@@ -27,3 +27,15 @@
 *.exe
 *.out
 *.app
+
+*.opensdf
+*.sln
+*.sdf
+Audio/Debug/
+Video/Debug/
+AVManager/Debug/
+lib/
+ipch/
+bin/
+Debug/
+Release/

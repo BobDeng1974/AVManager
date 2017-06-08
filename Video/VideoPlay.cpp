@@ -2,7 +2,8 @@
 #include "VideoPlay.h"
 #include "assert.h"
 
-////////////////////////////////////////////////////////////////////////////////
+CVideoPlay* CVideoPlay::s_Instance = NULL;
+
 CVideoPlay::CVideoPlay()
 {
 	m_pGraph        = NULL;
@@ -19,6 +20,15 @@ CVideoPlay::CVideoPlay()
 CVideoPlay::~CVideoPlay()
 {
 
+}
+
+CVideoPlay* CVideoPlay::GetInstance()
+{
+	if (s_Instance == NULL)
+	{
+		s_Instance = new CVideoPlay();
+	}
+	return s_Instance;
 }
 
 bool CVideoPlay::Init(HWND hWnd)

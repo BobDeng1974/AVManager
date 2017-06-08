@@ -2,6 +2,8 @@
 #include "VideoCapture.h"
 
 
+CVideoCapture* CVideoCapture::s_Instance = NULL;
+
 CVideoCapture::CVideoCapture()
 	: m_pBuilder(NULL)
 	, m_pGraph(NULL)
@@ -13,6 +15,15 @@ CVideoCapture::CVideoCapture()
 CVideoCapture::~CVideoCapture()
 {
 
+}
+
+CVideoCapture* CVideoCapture::GetInstance()
+{
+	if (s_Instance == NULL)
+	{
+		s_Instance = new CVideoCapture();
+	}
+	return s_Instance;
 }
 
 HRESULT CVideoCapture::Init(HWND hWnd)

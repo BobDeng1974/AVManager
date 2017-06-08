@@ -4,12 +4,14 @@
 #include "AUDIO_SDK.h"
 #include "WaveFile.h"
 
-class CAudioRecord : public c_thread 
-	,public c_singleton<CAudioRecord>
+class CAudioRecord 
 {
-public:
+private:
 	CAudioRecord();
 	~CAudioRecord();
+public:
+	static CAudioRecord* GetInstance();
+	static CAudioRecord* s_Instance;
 
 	LRESULT	Init(LPGUID pGuid,int samplePerSec, int bitsPerSameple, int channels);
 	void	Release();
@@ -25,7 +27,8 @@ public:
 
 	LRESULT	CreateSoundFile(LPCTSTR lpFileName);
 
-	virtual int Execute();
+	static unsigned int __stdcall StartAddr(void* param);
+	int	Execute();
 private:
 	AudioRecordCallBack m_pCallBack;
 	void*				m_pContext;
@@ -41,6 +44,7 @@ private:
 	BOOL				 m_bIsRecording;
 	BOOL				 m_bIsCreated;
 	CWaveFile			 m_waveFile;
+	BOOL				m_bRunning;
 };
 
 

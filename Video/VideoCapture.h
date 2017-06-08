@@ -3,12 +3,15 @@
 
 #include "VIDEO_SDK.H"
 
-class CVideoCapture : public c_singleton<CVideoCapture>
+class CVideoCapture
 {
-public:
+private:
 	CVideoCapture();
 	~CVideoCapture();
-	
+public:
+	static CVideoCapture* GetInstance();
+	static CVideoCapture* s_Instance;
+
 	HRESULT	Init(HWND hWnd);
 	void	Release();
 

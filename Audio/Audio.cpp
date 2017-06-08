@@ -6,24 +6,26 @@
 #include "AudioPlay.h"
 #include "AudioRecord.h"
 
+CAudioPlay* CAudioPlay::s_Instance = NULL;
+
 void AudioPlayInit(HWND hWnd, int cooperateLevel)
 {
-	CAudioPlay::get_instance()->Init(hWnd,cooperateLevel);
+	CAudioPlay::GetInstance()->Init(hWnd,cooperateLevel);
 }
 
 void AudioPlayRelease()
 {
-	CAudioPlay::get_instance()->Release();
+	CAudioPlay::GetInstance()->Release();
 }
 
 void AudioPlayStart(LPCTSTR lpFileName)
 {
-	CAudioPlay::get_instance()->Start(lpFileName);
+	CAudioPlay::GetInstance()->Start(lpFileName);
 }
 
 void AudioPlayStop()
 {
-	CAudioPlay::get_instance()->Stop();
+	CAudioPlay::GetInstance()->Stop();
 }
 
 void AudioPlayPause()
@@ -39,30 +41,30 @@ void AudioPlayContinue()
 
 void AudioRecordInit(LPGUID guid, int samplePerSec, int bitsPerSameple, int channels)
 {
-	CAudioRecord::get_instance()->Init(guid, samplePerSec, bitsPerSameple, channels);
+	CAudioRecord::GetInstance()->Init(guid, samplePerSec, bitsPerSameple, channels);
 }
 
 void AudioRecordRelease()
 {
-	CAudioRecord::get_instance()->Release();
+	CAudioRecord::GetInstance()->Release();
 }
 
 void AudioRecordStart(LPCTSTR lpFileName)
 {
-	CAudioRecord::get_instance()->Start(lpFileName);
+	CAudioRecord::GetInstance()->Start(lpFileName);
 }
 
 void AudioRecordStop()
 {
-	CAudioRecord::get_instance()->Stop();
+	CAudioRecord::GetInstance()->Stop();
 }
 
 void AduioRecordSetCallBack(AudioPlayCallBack pCallBack, void *context)
 {
-	CAudioRecord::get_instance()->SetAudioRecordCallback(pCallBack,context);
+	CAudioRecord::GetInstance()->SetAudioRecordCallback(pCallBack,context);
 }
 
 void AudioREnumSoundCard(VECT_SOUNDCARD_INFO *vSoundCardInfo)
 {
-	CAudioRecord::get_instance()->EnumSoundCardInfo(vSoundCardInfo);
+	CAudioRecord::GetInstance()->EnumSoundCardInfo(vSoundCardInfo);
 }

@@ -17,13 +17,9 @@
 #include <vector>
 #include <tchar.h>
 // TODO: 在此处引用程序需要的其他头文件
-#include "c_singleton.h"
-#include "c_event.h"
-#include "c_thread.h"
-#include "tyeps.h"
+#include "types.h"
 
 //namespace
-using namespace utility;
 using namespace std;
 
 

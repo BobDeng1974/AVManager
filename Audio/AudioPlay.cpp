@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "AudioPlay.h"
+#include <process.h>
 
 
 CAudioPlay::CAudioPlay()
@@ -7,11 +8,21 @@ CAudioPlay::CAudioPlay()
 	m_dwNextWriteOffset = 0;
 	m_hFile = NULL;
 	m_bIsPlaying = FALSE;
+	m_bRunning = FALSE;
 }
 
 CAudioPlay::~CAudioPlay()
 {
 
+}
+
+CAudioPlay* CAudioPlay::GetInstance()
+{
+	if (s_Instance == NULL)
+	{
+		s_Instance = new CAudioPlay();
+	}
+	return s_Instance;
 }
 
 void CAudioPlay::Init(HWND hWnd, int cooperativeLevel /* = 2 */)
@@ -43,7 +54,13 @@ BOOL CAudioPlay::Start(LPCTSTR lpFile)
 	CopyDataToSoundBuffer();//先拷贝2秒的数据准备播放
 	m_pDSB8->SetCurrentPosition(0);
 	m_pDSB8->Play(0,0,DSBPLAY_LOOPING);
-	c_thread::Start();
+	unsigned threadId = 0;
+	HANDLE h = (HANDLE)_beginthreadex(NULL, NULL, StartAddr, this, 0, &threadId);
+	if (h != INVALID_HANDLE_VALUE)
+	{
+		m_bRunning = TRUE;
+		CloseHandle(h);
+	}
 	return TRUE;
 }
 
@@ -70,14 +87,21 @@ BOOL CAudioPlay::Stop()
 	}
 	m_dwNextWriteOffset = 0;
 	m_bIsPlaying = 0;
-	c_thread::Stop();
+	m_bRunning = FALSE;
 	return TRUE;
+}
+
+unsigned int CAudioPlay::StartAddr(void* param)
+{
+	CAudioPlay* pThis = static_cast<CAudioPlay*>(param);
+	pThis->Execute();
+	return 0;
 }
 
 int CAudioPlay::Execute()
 {
 	m_bIsPlaying = TRUE;
-	while (Get_Running())
+	while (m_bRunning)
 	{		
 		DWORD res = WaitForMultipleObjects (2, m_hEvent, FALSE, INFINITE);
 		if(res >= WAIT_OBJECT_0)

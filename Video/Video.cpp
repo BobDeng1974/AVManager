@@ -8,62 +8,62 @@
 
 void	VideoCaptureInit(HWND hWnd)
 {
-	CVideoCapture::get_instance()->Init(hWnd);
+	CVideoCapture::GetInstance()->Init(hWnd);
 }
 
 void	VideoCaptureRelease()
 {
-	CVideoCapture::get_instance()->Release();
+	CVideoCapture::GetInstance()->Release();
 }
 
 void    VideoCaptureStart()
 {
-	CVideoCapture::get_instance()->VideoCaptureStart();
+	CVideoCapture::GetInstance()->VideoCaptureStart();
 }
 
 void	VideoCaptureStop()
 {
-	CVideoCapture::get_instance()->VideoCaptureStop();
+	CVideoCapture::GetInstance()->VideoCaptureStop();
 }
 
 void  VideoEnumCaptureDevice(VECT_CAPTURE_INFO *pVCaptureInfo)
 {
-	CVideoCapture::get_instance()->VideoCaptureDeviceEnum(pVCaptureInfo);
+	CVideoCapture::GetInstance()->VideoCaptureDeviceEnum(pVCaptureInfo);
 }
 
 void VideoCaptureSelectDevice(int nDeviceID)
 {
-	CVideoCapture::get_instance()->SelectDevice(nDeviceID);
+	CVideoCapture::GetInstance()->SelectDevice(nDeviceID);
 }
 
 
 //play
 void	VideoPlayInit(HWND hWnd)
 {
-	CVideoPlay::get_instance()->Init(hWnd);
+	CVideoPlay::GetInstance()->Init(hWnd);
 }
 
 void	VideoPalyRelease()
 {
-	CVideoPlay::get_instance()->Release();
+	CVideoPlay::GetInstance()->Release();
 }
 
 void	VideoPlayStart(LPCTSTR lpFile)
 {
-	CVideoPlay::get_instance()->VideoPlayStart(lpFile);
+	CVideoPlay::GetInstance()->VideoPlayStart(lpFile);
 }
 
 void	VideoPlayStop()
 {
-	CVideoPlay::get_instance()->VideoPlayStop();
+	CVideoPlay::GetInstance()->VideoPlayStop();
 }
 
 void	VideoPlayPause()
 {
-	CVideoPlay::get_instance()->VideoPlayPause();
+	CVideoPlay::GetInstance()->VideoPlayPause();
 }
 
 void  SnapshotBitmap(LPCTSTR lpFile)
 {
-	CVideoPlay::get_instance()->SnapshotBitmap(lpFile);
+	CVideoPlay::GetInstance()->SnapshotBitmap(lpFile);
 }

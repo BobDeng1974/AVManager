@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "AudioRecord.h"
+#include <process.h>
 
+CAudioRecord* CAudioRecord::s_Instance = NULL;
 
 CAudioRecord::CAudioRecord()
 	: m_pCallBack(NULL)
@@ -17,6 +19,15 @@ CAudioRecord::CAudioRecord()
 CAudioRecord::~CAudioRecord()
 {
 
+}
+
+CAudioRecord* CAudioRecord::GetInstance()
+{
+	if (s_Instance == NULL)
+	{
+		s_Instance = new CAudioRecord();
+	}
+	return s_Instance;
 }
 
 LRESULT CAudioRecord::Init(LPGUID pGuid, int samplePerSec, int bitsPerSameple, int channels)
@@ -57,9 +68,16 @@ BOOL CAudioRecord::Start(LPCTSTR lpFileName)
 
 	if (m_lpDSC != NULL )
 	{
-		c_thread::Start();
-		m_pDSB8->Start(DSCBSTART_LOOPING);
-		m_bIsRecording = TRUE;
+		unsigned threadId = 0;
+		HANDLE h = (HANDLE)_beginthreadex(NULL, NULL, StartAddr, this, 0, &threadId);
+		if (h != INVALID_HANDLE_VALUE)
+		{
+			m_pDSB8->Start(DSCBSTART_LOOPING);
+			m_bIsRecording = TRUE;
+			m_bRunning = TRUE;
+			CloseHandle(h);
+		}
+		
 	}
 
 	return TRUE;
@@ -70,7 +88,7 @@ void CAudioRecord::Stop()
 	if (m_pDSB8) 
 	{
 		m_pDSB8->Stop();
-		c_thread::Stop();
+		m_bRunning = FALSE;
 		Sleep(500);
 	}
 
@@ -178,7 +196,14 @@ BOOL CAudioRecord::DsEnumSDInfoProc(LPGUID lpGUID, LPCTSTR lpszDesc, LPCTSTR lps
 	return(TRUE);
 }
 
-int CAudioRecord::Execute()
+unsigned int CAudioRecord::StartAddr(void* param)
+{
+	CAudioRecord* pThis = static_cast<CAudioRecord*>(param);
+	pThis->Execute();
+	return 0;
+}
+
+int  CAudioRecord::Execute()
 {
 	HRESULT hr;
 	VOID *pbCaptureData = NULL;
@@ -190,7 +215,7 @@ int CAudioRecord::Execute()
 	DWORD dwCapturePos = 0;
 	LONG lLockSize =  m_wformat.nAvgBytesPerSec;
 
-	while (Get_Running())
+	while (m_bRunning)
 	{
 		hr = WaitForMultipleObjects(2, m_hEvent,FALSE,INFINITE );
 		if (hr >= WAIT_OBJECT_0)

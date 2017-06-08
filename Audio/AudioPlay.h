@@ -4,12 +4,15 @@
 #include "AUDIO_SDK.h"
 
 
-class CAudioPlay : public c_singleton<CAudioPlay>
-	, public c_thread
+class CAudioPlay
 {
-public:
+private:
 	CAudioPlay();
 	~CAudioPlay();
+
+public:
+	static CAudioPlay* GetInstance();
+	static CAudioPlay* s_Instance;
 
 	void Init(HWND hWnd, int cooperativeLevel = 2);
 	void Release();
@@ -22,6 +25,8 @@ public:
 	BOOL OpenFile(LPCTSTR lpFile);
 	BOOL CreateSoundBuffer();
 	LRESULT CopyDataToSoundBuffer();
+
+	static unsigned int __stdcall StartAddr(void* param);
 private:
 	AudioPlayCallBack	m_pPlayCallback;
 	void* m_pPlayContext;
@@ -36,6 +41,7 @@ private:
 	WAVEFORMATEX m_waveFormat;
 	HANDLE		 m_hFile;
 	BOOL		 m_bIsPlaying;
+	BOOL		m_bRunning;
 };
 
 
