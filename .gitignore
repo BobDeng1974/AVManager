@@ -34,12 +34,8 @@
 Audio/Debug/
 Video/Debug/
 AVManager/Debug/
-DuiLib/Build/
 lib/
 ipch/
 bin/
-Debug/*.dll
-Debug/*.exe
-Debug/*.ilk
-Debug/*.pdb
+Debug/
 Release/
