@@ -83,11 +83,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="MainWnd.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="VideoWnd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainWdn.cpp" />
+    <ClCompile Include="MainWnd.cpp" />
+    <ClCompile Include="VideoWnd.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

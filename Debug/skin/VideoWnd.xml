@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="400,400">
+    <VerticalLayout width="400" height="400" bkcolor="#FFFFFFFF" />
+</Window>

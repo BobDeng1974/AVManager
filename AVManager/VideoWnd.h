@@ -1,8 +1,9 @@
-#ifndef MAIN_WND_H_
-#define MAIN_WND_H_
-#include "VideoWnd.h"
+#ifndef VIDEO_WND_H_
+#define VIDEO_WND_H_
 
-class CMainWnd : public WindowImplBase
+
+
+class CVideoWnd : public WindowImplBase
 {
 public:
 	virtual CDuiString GetSkinFolder();
@@ -15,11 +16,6 @@ public:
 
 	CControlUI* CreateControl(LPCTSTR pstrClass);
 
-
-	void OnBtnPlayVideo();
-
-private:
-	CVideoWnd m_VideoWnd;
 };
 
 #endif

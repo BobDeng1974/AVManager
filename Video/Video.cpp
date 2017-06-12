@@ -43,7 +43,7 @@ void	VideoPlayInit(HWND hWnd)
 	CVideoPlay::GetInstance()->Init(hWnd);
 }
 
-void	VideoPalyRelease()
+void	VideoPlayRelease()
 {
 	CVideoPlay::GetInstance()->Release();
 }
