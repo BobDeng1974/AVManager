@@ -33,8 +33,8 @@ CControlUI* CMainWnd::CreateControl(LPCTSTR pstrClass)
 void CMainWnd::InitWindow()
 {
 	m_VideoWnd.CreateDuiWindow(m_hWnd, _T("视频"), WS_CHILD);
-	//m_hVideoWnd.CenterWindow();
-	//m_VideoWnd.ShowWindow();
+	m_VideoWnd.ShowWindow();
+	VideoPlayInit(m_VideoWnd.GetHWND());
 	
 }
 
@@ -65,6 +65,6 @@ LRESULT CMainWnd::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/,
 
 void CMainWnd::OnBtnPlayVideo()
 {
-	VideoPlayInit(m_VideoWnd.GetHWND());
-	VideoPlayStart(_T("G:\\电影\\JPJJ第一部.mp4"));
+	
+	VideoPlayStart(_T("G:\\1.avi"));
 }
