@@ -26,9 +26,15 @@ VIDEO_API void	VideoPlayRelease();
 
 VIDEO_API void	VideoPlayStart(LPCTSTR lpFile);
 
+VIDEO_API void	VideoPlayRun();
+
 VIDEO_API void	VideoPlayStop();
 
 VIDEO_API void  SnapshotBitmap(LPCTSTR lpFile);
+
+VIDEO_API void	VideoAddFilter(const GUID& clsid, LPCWCHAR wszName, IBaseFilter **ppF);
+
+VIDEO_API void	VideoConnectFilter(IBaseFilter *pSrc, IBaseFilter *pDest);
 
 //Capture
 VIDEO_API void	VideoCaptureInit(HWND hWnd);

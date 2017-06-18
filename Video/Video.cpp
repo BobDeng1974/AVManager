@@ -53,6 +53,11 @@ void	VideoPlayStart(LPCTSTR lpFile)
 	CVideoPlay::GetInstance()->VideoPlayStart(lpFile);
 }
 
+void	VideoPlayRun()
+{
+	CVideoPlay::GetInstance()->Run();
+}
+
 void	VideoPlayStop()
 {
 	CVideoPlay::GetInstance()->VideoPlayStop();
@@ -66,4 +71,14 @@ void	VideoPlayPause()
 void  SnapshotBitmap(LPCTSTR lpFile)
 {
 	CVideoPlay::GetInstance()->SnapshotBitmap(lpFile);
+}
+
+void	VideoAddFilter(const GUID& clsid, LPCWCHAR wszName, IBaseFilter **ppF)
+{
+	CVideoPlay::GetInstance()->AddFilterByCLSID(clsid, wszName, ppF);
+}
+
+void	VideoConnectFilter(IBaseFilter *pSrc, IBaseFilter *pDest)
+{
+	CVideoPlay::GetInstance()->ConnectFilters(pSrc, pDest);
 }

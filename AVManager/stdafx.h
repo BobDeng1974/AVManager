@@ -23,6 +23,8 @@
 // TODO: 在此处引用程序需要的其他头文件
 
 
+#include <Initguid.h>
+
 #include "..\DuiLib\UIlib.h"
 
 using namespace DuiLib;
@@ -44,3 +46,8 @@ using namespace DuiLib;
 
 #pragma comment(lib,"Audio.lib")
 #pragma comment(lib,"Video.lib")
+
+
+//lib
+#pragma comment (lib,"Strmiids")
+#pragma comment (lib,"quartz")

@@ -229,6 +229,26 @@ bool CVideoPlay::VideoPlayStart(LPCTSTR lpFile)
 	return false;
 }
 
+bool CVideoPlay::Run(void)
+{
+	if (m_pGraph && m_pMediaControl)
+	{
+		if (!IsRunning())
+		{
+			if (SUCCEEDED(m_pMediaControl->Run()))
+			{
+				return true;
+			}
+		}
+		else
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
 bool CVideoPlay::VideoPlayStop(void)
 {
 	if (m_pGraph && m_pMediaControl)
@@ -525,15 +545,15 @@ bool CVideoPlay::SnapshotBitmap(const TCHAR *outFile)//const char * outFile)
 }
 
 //Filter manager
-HRESULT AddFilterByCLSID(IGraphBuilder *pGraph, const GUID& clsid, LPCWCHAR wszName, IBaseFilter **ppF)
+HRESULT CVideoPlay::AddFilterByCLSID(const GUID& clsid, LPCWCHAR wszName, IBaseFilter **ppF)
 {
-	if (!pGraph || !ppF) return E_POINTER;
+	if (!m_pGraph || !ppF) return E_POINTER;
 	*ppF = 0;
 	IBaseFilter *pF = 0;
 	HRESULT hr = CoCreateInstance(clsid, 0, CLSCTX_INPROC_SERVER, IID_IBaseFilter, reinterpret_cast<void**>(&pF));
 	if (SUCCEEDED(hr))
 	{
-		hr = pGraph->AddFilter(pF, wszName);
+		hr = m_pGraph->AddFilter(pF, wszName);
 		if (SUCCEEDED(hr))
 			*ppF = pF;
 		else
@@ -542,9 +562,7 @@ HRESULT AddFilterByCLSID(IGraphBuilder *pGraph, const GUID& clsid, LPCWCHAR wszN
 	return hr;
 }
 
-
-
-HRESULT GetUnconectedPin(IBaseFilter *pFilter, PIN_DIRECTION PinDir, IPin **ppPin)
+HRESULT CVideoPlay::GetUnconectedPin(IBaseFilter *pFilter, PIN_DIRECTION PinDir, IPin **ppPin)
 {
 	*ppPin = 0;
 	IEnumPins *pEnum = 0;
@@ -582,9 +600,9 @@ HRESULT GetUnconectedPin(IBaseFilter *pFilter, PIN_DIRECTION PinDir, IPin **ppPi
 	return E_FAIL;
 }
 
-HRESULT ConnectFilters(IGraphBuilder *pGraph, IPin *pOut, IBaseFilter *pDest)
+HRESULT CVideoPlay::ConnectFilters(IPin *pOut, IBaseFilter *pDest)
 {
-	if ((pGraph == NULL) || (pOut == NULL) || (pDest == NULL))
+	if ((m_pGraph == NULL) || (pOut == NULL) || (pDest == NULL))
 		return E_POINTER;
 
 #ifdef _DEBUG
@@ -599,21 +617,21 @@ HRESULT ConnectFilters(IGraphBuilder *pGraph, IPin *pOut, IBaseFilter *pDest)
 	if (FAILED(hr))
 		return hr;
 
-	hr = pGraph->Connect(pOut, pIn);
+	hr = m_pGraph->Connect(pOut, pIn);
 	pIn->Release();
 	return hr;
 }
 
-HRESULT ConnectFilters(IGraphBuilder *pGraph, IBaseFilter *pSrc, IBaseFilter *pDest)
+HRESULT CVideoPlay::ConnectFilters(IBaseFilter *pSrc, IBaseFilter *pDest)
 {
-	if ((pGraph == NULL) || (pDest == NULL))
+	if ((m_pGraph == NULL) || (pDest == NULL))
 		return E_POINTER;
 
 	IPin *pOut = 0;
 	HRESULT hr = GetUnconectedPin(pSrc, PINDIR_OUTPUT, &pOut);
 	if (FAILED(hr))
 		return hr;
-	hr = ConnectFilters(pGraph, pOut, pDest);
+	hr = ConnectFilters(pOut, pDest);
 	pOut->Release();
 	return hr;
 }

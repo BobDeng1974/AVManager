@@ -81,6 +81,12 @@ public:
 	void Mute();
 	void UnMute();
 
+
+	HRESULT AddFilterByCLSID(const GUID& clsid, LPCWCHAR wszName, IBaseFilter **ppF);
+	HRESULT ConnectFilters(IBaseFilter *pSrc, IBaseFilter *pDest);
+	HRESULT GetUnconectedPin(IBaseFilter *pFilter, PIN_DIRECTION PinDir, IPin **ppPin);
+	HRESULT ConnectFilters(IPin *pOut, IBaseFilter *pDest);
+	bool	Run(void);
 private:
 	//查询有关接口
 	bool QueryInterfaces(void);

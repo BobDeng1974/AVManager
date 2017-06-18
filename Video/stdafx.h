@@ -29,9 +29,6 @@ using namespace std;
 #pragma comment (lib,"Strmiids")
 #pragma comment (lib,"quartz")
 
-
-
-
 #if defined(UNICODE) || defined(_UNICODE)
 typedef std::wstring tstring;
 #else
