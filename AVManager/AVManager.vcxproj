@@ -82,12 +82,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="LovingWnd.h" />
     <ClInclude Include="MainWnd.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="VideoWnd.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LovingWnd.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWnd.cpp" />
     <ClCompile Include="VideoWnd.cpp" />

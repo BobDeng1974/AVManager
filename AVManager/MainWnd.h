@@ -1,6 +1,7 @@
 #ifndef MAIN_WND_H_
 #define MAIN_WND_H_
 #include "VideoWnd.h"
+#include "LovingWnd.h"
 
 class CMainWnd : public WindowImplBase
 {
@@ -17,9 +18,11 @@ public:
 
 
 	void OnBtnPlayVideo();
+	void OnBtnLayeredWindow();
 
 private:
 	CVideoWnd m_VideoWnd;
+	CLovingWnd m_LovingWnd;
 };
 
 #endif

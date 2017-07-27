@@ -66,6 +66,10 @@ void CMainWnd::Notify(TNotifyUI& msg)
 		{
 			OnBtnPlayVideo();
 		}
+		else if (msg.pSender->GetName() == _T("btn_layered_window"))
+		{
+			OnBtnLayeredWindow();
+		}
 	}
 }
 
@@ -108,4 +112,11 @@ void CMainWnd::OnBtnPlayVideo()
 	
 
 	//VideoPlayStart(_T("G:\\电影\\JPJJ第一部.mp4"));
+}
+
+
+void CMainWnd::OnBtnLayeredWindow()
+{
+	m_LovingWnd.CreateDuiWindow(m_hWnd, _T("loving"), WS_POPUP);
+	m_LovingWnd.ShowWindow();
 }

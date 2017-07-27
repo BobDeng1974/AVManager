@@ -27,6 +27,9 @@
     <ClInclude Include="VideoWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="LovingWnd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,6 +39,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="VideoWnd.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LovingWnd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
