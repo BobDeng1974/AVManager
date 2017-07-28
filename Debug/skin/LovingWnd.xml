@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<Window size="309,172">
-    <VerticalLayout width="309" height="172" bkcolor="#FFFFFFFF" />
+<Window size="100,100">
+    <VerticalLayout width="100" height="100" bkcolor="#FFFFFFFF" >
+      <Label width="100" height="100" bkimage="skin\\loving.bmp"></Label>
+    </VerticalLayout>
 </Window>
