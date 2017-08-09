@@ -140,7 +140,7 @@ bool CVideoPlay::SetDisplayWindow(HWND inWindow)
 	if (m_pVideoWindow)
 	{
 		// 首先隐藏视频窗口
-		m_pVideoWindow->put_Visible(OAFALSE);
+		//m_pVideoWindow->put_Visible(OAFALSE);
 		m_pVideoWindow->put_Owner((OAHWND)inWindow);
 
 		//获取输入窗口的显示区域
@@ -213,10 +213,10 @@ bool CVideoPlay::VideoPlayStart(LPCTSTR lpFile)
 
 		if (!IsRunning())
 		{
+			SetDisplayWindow(m_hParent);
+			SetNotifyWindow(m_hParent);
 			if (SUCCEEDED(m_pMediaControl->Run()))
-			{
-				SetDisplayWindow(m_hParent);
-				SetNotifyWindow(m_hParent);
+			{				
 				return true;
 			}
 		}
@@ -235,8 +235,10 @@ bool CVideoPlay::Run(void)
 	{
 		if (!IsRunning())
 		{
+			SetDisplayWindow(m_hParent);
+			SetNotifyWindow(m_hParent);
 			if (SUCCEEDED(m_pMediaControl->Run()))
-			{
+			{				
 				return true;
 			}
 		}

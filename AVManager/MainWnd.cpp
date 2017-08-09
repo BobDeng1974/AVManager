@@ -49,7 +49,7 @@ void CMainWnd::InitWindow()
 	m_VideoWnd.ShowWindow();
 	VideoPlayInit(m_VideoWnd.GetHWND());
 
-	
+	SetWindowPos(m_VideoWnd, NULL, 0, 60, 0, 0, SWP_NOSIZE);
 }
 
 
@@ -93,7 +93,7 @@ void CMainWnd::OnBtnPlayVideo()
 
 	VideoAddFilter(CLSID_LavSplitter_Source, L"Lav Splitter Source", &pLavSplitterSource);
 	hr = pLavSplitterSource->QueryInterface(IID_IFileSourceFilter, (void **)&pFileSourceFilter);
-	hr = pFileSourceFilter->Load(_T("G:\\电影\\JPJJ第一部.mp4"), NULL);
+	hr = pFileSourceFilter->Load(_T("d:\\1.rmvb"), NULL);
 
 	VideoAddFilter(CLSID_LavVideoDecoder, L"Lav Video Decoder", &pLavVideoDecoder);
 	VideoConnectFilter(pLavSplitterSource, pLavVideoDecoder);
@@ -111,12 +111,19 @@ void CMainWnd::OnBtnPlayVideo()
 
 	
 
-	//VideoPlayStart(_T("G:\\电影\\JPJJ第一部.mp4"));
+	//VideoPlayStart(_T("d:\\1.rmvb"));
 }
 
 
 void CMainWnd::OnBtnLayeredWindow()
 {
-	m_LovingWnd.CreateDuiWindow(m_hWnd, _T("loving"), WS_POPUP);
-	m_LovingWnd.ShowWindow();
+	if (!IsWindow(m_LovingWnd))
+	{
+		m_LovingWnd.CreateDuiWindow(m_hWnd, _T("loving"), WS_POPUP);
+		m_LovingWnd.ShowWindow();
+	}
+	else
+	{
+		m_LovingWnd.ShowWindow(!IsWindowVisible(m_LovingWnd));
+	}
 }

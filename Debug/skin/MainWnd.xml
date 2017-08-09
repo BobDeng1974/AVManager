@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <Window size="700,550" caption="0,0,0,60" roundcorner="3,3">
-    <VerticalLayout width="707" height="550" bkcolor="#FFFFFFFF">
+    <VerticalLayout width="700" height="550" bkcolor="#FFFFFFFF">
         <HorizontalLayout width="700" height="60" bkcolor="#FF232624" inset="5,2,0,0">
             <Label width="60" height="30" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
             <Control />
