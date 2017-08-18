@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "MainWnd.h"
 
+
 #include <strmif.h>
+#include <commdlg.h>
 
 DEFINE_GUID(CLSID_LavSplitter,
 0x171252A0, 0x8820, 0x4AFE, 0x9D, 0xF8, 0x5C, 0x92, 0xB2, 0xD6, 0x6B, 0x04);
@@ -35,9 +37,9 @@ LPCTSTR CMainWnd::GetWindowClassName(void) const
 
 CControlUI* CMainWnd::CreateControl(LPCTSTR pstrClass)
 {
-	if (_tcsicmp(pstrClass, _T("")) == 0)
+	if (_tcsicmp(pstrClass, _T("FileListUI")) == 0)
 	{
-		//return new CListItemUI(m_PaintManager);
+		return new CFileListUI(m_PaintManager);
 	}
 	return NULL;
 }
@@ -46,10 +48,18 @@ CControlUI* CMainWnd::CreateControl(LPCTSTR pstrClass)
 void CMainWnd::InitWindow()
 {
 	m_VideoWnd.CreateDuiWindow(m_hWnd, _T("视频"), WS_CHILD);
-	m_VideoWnd.ShowWindow();
+	m_VideoWnd.ShowWindow(SW_HIDE);
 	VideoPlayInit(m_VideoWnd.GetHWND());
+	//SetWindowPos(m_VideoWnd, NULL, 0, 60, 0, 0, SWP_NOSIZE);
 
-	SetWindowPos(m_VideoWnd, NULL, 0, 60, 0, 0, SWP_NOSIZE);
+
+	m_pVerFileList = static_cast<CVerticalLayoutUI*>(m_PaintManager.FindControl(_T("ver_file_list")));
+	m_pHerVideo = static_cast<CHorizontalLayoutUI*>(m_PaintManager.FindControl(_T("her_video")));
+	m_pFileListUI = static_cast<CFileListUI*>(m_PaintManager.FindControl(_T("list_file_ui")));
+
+	CListTextElementUI* pEle = new CListTextElementUI();
+	pEle->SetText(0,_T("111"));
+	m_pFileListUI->Add(pEle);
 }
 
 
@@ -61,6 +71,12 @@ void CMainWnd::Notify(TNotifyUI& msg)
 			VideoPlayRelease();			
 			m_VideoWnd.Close();
 			Close();
+		}
+		else if (msg.pSender->GetName() == _T("btn_file_list")) {
+			OnFileList();
+		}
+		else if (msg.pSender->GetName() == _T("btn_open_file")) {
+			OnOpenFile();
 		}
 		else if (msg.pSender->GetName() == _T("btn_play_video"))
 		{
@@ -80,6 +96,80 @@ LRESULT CMainWnd::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/,
 	return 0;
 }
 
+LRESULT CMainWnd::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+{
+	int width = LOWORD(lParam);
+	int height = HIWORD(lParam);
+	BOOL b = m_pVerFileList->IsVisible();
+	if (b)
+	{
+		SetWindowPos(m_VideoWnd, NULL, 178, 60, width - 178, height - 60 - 76, SWP_SHOWWINDOW);
+	}
+	else
+	{
+		SetWindowPos(m_VideoWnd, NULL, 0, 60, width, height - 60 - 76, SWP_SHOWWINDOW);
+	}
+	WindowImplBase::OnSize(uMsg, wParam, lParam, bHandled);
+	return 0;
+}
+
+void CMainWnd::OnFileList()
+{
+	BOOL b = m_pVerFileList->IsVisible();
+	m_pVerFileList->SetVisible(!b);
+
+	RECT rc = m_pVerFileList->GetPos();
+	int width = m_pHerVideo->GetWidth();
+	int height = m_pHerVideo->GetHeight();
+	if (b)
+	{
+		SetWindowPos(m_VideoWnd, NULL, 0, rc.top, width, height, SWP_SHOWWINDOW);
+	}
+	else
+	{
+		SetWindowPos(m_VideoWnd, NULL, rc.right, rc.top, width - (rc.right - rc.left), height, SWP_SHOWWINDOW);
+	}
+	
+}
+
+void CMainWnd::OnOpenFile()
+{
+	OPENFILENAME ofn;
+	TCHAR szOpenFileNames[80 * MAX_PATH] = { 0 };
+	TCHAR szPath[MAX_PATH] = { 0 };
+	TCHAR szFileName[MAX_PATH] = { 0 };
+	TCHAR* p = NULL;
+	int nLen = 0;
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.Flags = OFN_EXPLORER | OFN_ALLOWMULTISELECT;
+	ofn.lStructSize = sizeof(ofn);
+	ofn.lpstrFile = szOpenFileNames;
+	ofn.nMaxFile = sizeof(szOpenFileNames);
+	ofn.lpstrFile[0] = '\0';
+	ofn.lpstrFilter = TEXT("All Files(*.*)\0*.*\0");
+	if (GetOpenFileName(&ofn))
+	{
+		m_mFileList.clear();
+		lstrcpyn(szPath, szOpenFileNames, ofn.nFileOffset);
+		szPath[ofn.nFileOffset] = '\0';
+		nLen = lstrlen(szPath);
+		if (szPath[nLen - 1] != '\\')                        //如果选了多个文件,则必须加上'//'
+		{
+			lstrcat(szPath, TEXT("\\"));
+		}
+		p = szOpenFileNames + ofn.nFileOffset;              //把指针移到第一个文件		
+		while (*p)
+		{
+			ZeroMemory(szFileName, sizeof(szFileName));
+			lstrcat(szFileName, szPath);               //给文件名加上路径 
+			lstrcat(szFileName, p);                    //加上文件名 
+			//lstrcat(szFileName, TEXT("\n"));
+			m_mFileList.insert(make_pair(p, szFileName));
+			p += lstrlen(p) + 1;                        //移至下一个文件
+		}
+	}
+	
+}
 
 void CMainWnd::OnBtnPlayVideo()
 {
@@ -93,7 +183,7 @@ void CMainWnd::OnBtnPlayVideo()
 
 	VideoAddFilter(CLSID_LavSplitter_Source, L"Lav Splitter Source", &pLavSplitterSource);
 	hr = pLavSplitterSource->QueryInterface(IID_IFileSourceFilter, (void **)&pFileSourceFilter);
-	hr = pFileSourceFilter->Load(_T("d:\\1.rmvb"), NULL);
+	hr = pFileSourceFilter->Load(_T("d:\\1.mov"), NULL);
 
 	VideoAddFilter(CLSID_LavVideoDecoder, L"Lav Video Decoder", &pLavVideoDecoder);
 	VideoConnectFilter(pLavSplitterSource, pLavVideoDecoder);
@@ -113,7 +203,6 @@ void CMainWnd::OnBtnPlayVideo()
 
 	//VideoPlayStart(_T("d:\\1.rmvb"));
 }
-
 
 void CMainWnd::OnBtnLayeredWindow()
 {

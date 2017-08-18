@@ -15,6 +15,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <vector>
+#include <map>
 #include <DShow.h>
 #include <types.h>
 
@@ -28,6 +29,7 @@
 #include "..\DuiLib\UIlib.h"
 
 using namespace DuiLib;
+using namespace std;
 
 #ifdef _DEBUG
 #   ifdef _UNICODE

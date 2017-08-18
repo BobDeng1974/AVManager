@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <Window size="700,550" caption="0,0,0,60" roundcorner="3,3">
     <VerticalLayout width="700" height="550" bkcolor="#FFFFFFFF">
-        <HorizontalLayout width="700" height="60" bkcolor="#FF232624" inset="5,2,0,0">
-            <Label width="60" height="30" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
+        <HorizontalLayout  height="60" bkcolor="#FF232624" inset="5,2,0,0">
+            <Label width="60" height="30" textcolor="#FFFE7700" disabledtextcolor="#FFA7A6AA" text="我的影音"/>
             <Control />
             <Button width="24" height="24" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" name="btn_min" normalimage="file='skin\btn_min.png' corner='0,0,0,0' source='0,0,24,24'" hotimage="file='skin\btn_min.png' corner='0,0,0,0' source='24,0,48,24'"/>
             <Button width="24" height="24" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" name="btn_close" normalimage="file='skin\btn_close.png' corner='0,0,0,0' source='0,0,24,24'" hotimage="file='skin\btn_close.png' corner='0,0,0,0' source='24,0,48,24'" />
         </HorizontalLayout>
-        <HorizontalLayout bkcolor="#FF151515" />
-        <HorizontalLayout  height="76" bkcolor="#FF232426" inset="10,2,10,0">
-            <Button name="btn_audio" text="" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_main_video.png' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\btn_main_video.png' corner='0,0,0,0' source='56,0,112,72'"/>
-            <Button name="btn_video" text="" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_main_video.png' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\btn_main_video.png' corner='0,0,0,0' source='56,0,112,72'" />
-            <Button name="btn_play_video" text="播放视频" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
-            <Button name="btn_layered_window" text="透明窗口" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
-    </HorizontalLayout>
+		<HorizontalLayout name="her_video" bkcolor="#FF151515">
+			<VerticalLayout width="178" name="ver_file_list" bkcolor="#FF222428">
+				<FileListUI name="list_file_ui" header="hidden"></FileListUI>
+			</VerticalLayout>
+			<HorizontalLayout  bkcolor="#FF151515"/>
+		</HorizontalLayout> 
+		
+        <HorizontalLayout height="76" bkcolor="#FF232426" inset="10,2,0,0">
+			<Button name="btn_file_list" text="列表" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
+			<Button name="btn_open_file" text="打开" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
+			<Control />
+			<Button name="btn_stop" text="停止" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
+			<Button name="btn_pre" text="上一曲" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
+			<Button name="btn_play_video" text="播放" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
+			<Button name="btn_next" text="下一曲" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
+			<!--<Button name="btn_layered_window" visible="false" text="透明窗口" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />-->
+			<HorizontalLayout childpadding="10" width="228">
+				<Button name="btn_audio" text="" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_microphone.png' corner='0,0,0,0' source='0,0,512,512' dest='0,14,56,58'" />
+				<Button name="btn_video" text="" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_main_video.png' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\btn_main_video.png' corner='0,0,0,0' source='56,0,112,72'" />
+				<Button name="btn_volume" width="38" padding="0,19,0,0" height="38" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_main_volume.png' corner='0,0,0,0' source='0,0,38,38'" hotimage="file='skin\btn_main_volume.png' corner='0,0,0,0' source='38,0,76,38'" />
+				<Button name="btn_volume_mutex" visible="false" padding="0,19,0,0" width="38" height="38" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_main_volume_mutex.png' corner='0,0,0,0' source='0,0,38,38'" hotimage="file='skin\btn_main_volume_mutex.png' corner='0,0,0,0' source='38,0,76,38'" />
+				<Button name="btn_volume_mirco" padding="0,19,0,0" width="38" height="38" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_main_microphone.png' corner='0,0,0,0' source='0,0,38,38'" hotimage="file='skin\btn_main_microphone.png' corner='0,0,0,0' source='38,0,76,38'" />
+				<Button name="btn_volume_mirco_mutex" visible="false" padding="0,19,0,0" width="38" height="38" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_main_microphone_mutex.png' corner='0,0,0,0' source='0,0,38,38'" hotimage="file='skin\btn_main_microphone_mutex.png' corner='0,0,0,0' source='38,0,76,38'" />
+			</HorizontalLayout>
+		</HorizontalLayout>
     </VerticalLayout>
 </Window>
