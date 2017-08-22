@@ -5,9 +5,6 @@
 #include <strmif.h>
 #include <commdlg.h>
 
-DEFINE_GUID(CLSID_LavSplitter,
-0x171252A0, 0x8820, 0x4AFE, 0x9D, 0xF8, 0x5C, 0x92, 0xB2, 0xD6, 0x6B, 0x04);
-
 DEFINE_GUID(CLSID_LavSplitter_Source,
 0xB98D13E7, 0x55DB, 0x4385, 0xA3, 0x3D, 0x09, 0xFD, 0x1B, 0xA2, 0x63, 0x38);
 
@@ -17,6 +14,16 @@ DEFINE_GUID(CLSID_LavVideoDecoder,
 
 DEFINE_GUID(CLSID_LavAudioDecoder,
 	0xE8E73B6B, 0x4CB3, 0x44A4, 0xBE, 0x99, 0x4F, 0x7B, 0xCB, 0x96, 0xE4, 0x91);
+
+CMainWnd::CMainWnd()
+{
+	m_pLavSplitterSource = NULL;
+	m_pFileSourceFilter = NULL;
+	m_pLavVideoDecoder = NULL;
+	m_pLavAudioDecoder = NULL;
+	m_pVideoRenderer = NULL;
+	m_pAudioRender = NULL;
+}
 
 CDuiString CMainWnd::GetSkinFolder()
 {
@@ -81,6 +88,10 @@ void CMainWnd::Notify(TNotifyUI& msg)
 		else if (msg.pSender->GetName() == _T("btn_play_video"))
 		{
 			OnBtnPlayVideo();
+		}
+		else if (msg.pSender->GetName() == _T("btn_stop"))
+		{
+			OnBtnStop();
 		}
 		else if (msg.pSender->GetName() == _T("btn_layered_window"))
 		{
@@ -174,34 +185,50 @@ void CMainWnd::OnOpenFile()
 void CMainWnd::OnBtnPlayVideo()
 {
 	HRESULT hr = S_OK;
-	IBaseFilter *pLavSplitterSource;	
-	IFileSourceFilter *pFileSourceFilter;
-	IBaseFilter *pLavVideoDecoder;
-	IBaseFilter *pLavAudioDecoder;
-	IBaseFilter *pVideoRenderer;
-	IBaseFilter *pAudioRender;
 
-	VideoAddFilter(CLSID_LavSplitter_Source, L"Lav Splitter Source", &pLavSplitterSource);
-	hr = pLavSplitterSource->QueryInterface(IID_IFileSourceFilter, (void **)&pFileSourceFilter);
-	hr = pFileSourceFilter->Load(_T("d:\\1.mov"), NULL);
+	if (m_pLavSplitterSource == NULL)
+	{
+		VideoAddFilter(CLSID_LavSplitter_Source, L"Lav Splitter Source", &m_pLavSplitterSource);
+		hr = m_pLavSplitterSource->QueryInterface(IID_IFileSourceFilter, (void **)&m_pFileSourceFilter);
+		if (hr == S_OK)
+		{
+			hr = m_pFileSourceFilter->Load(_T("d:\\1.mov"), NULL);
+			if (hr == S_OK)
+			{
 
-	VideoAddFilter(CLSID_LavVideoDecoder, L"Lav Video Decoder", &pLavVideoDecoder);
-	VideoConnectFilter(pLavSplitterSource, pLavVideoDecoder);
-	VideoAddFilter(CLSID_LavAudioDecoder, L"Lav Audio Decoder", &pLavAudioDecoder);
-	VideoConnectFilter(pLavSplitterSource, pLavAudioDecoder);
+			}
+		}
+		VideoAddFilter(CLSID_LavVideoDecoder, L"Lav Video Decoder", &m_pLavVideoDecoder);
+		VideoConnectFilter(m_pLavSplitterSource, m_pLavVideoDecoder);
+		VideoAddFilter(CLSID_LavAudioDecoder, L"Lav Audio Decoder", &m_pLavAudioDecoder);
+		VideoConnectFilter(m_pLavSplitterSource, m_pLavAudioDecoder);
+		VideoAddFilter(CLSID_VideoMixingRenderer9, L"Video Mixing Renderer-9", &m_pVideoRenderer);
+		VideoConnectFilter(m_pLavVideoDecoder, m_pVideoRenderer);
+		VideoAddFilter(CLSID_AudioRender, L"Audio render", &m_pAudioRender);
+		VideoConnectFilter(m_pLavAudioDecoder, m_pAudioRender);
+		m_pFileSourceFilter->Release();
+		m_pFileSourceFilter = NULL;
+		VideoPlayRun();
+	}
+}
 
-	VideoAddFilter(CLSID_VideoMixingRenderer9, L"Video Mixing Renderer-9", &pVideoRenderer);
-	VideoConnectFilter(pLavVideoDecoder, pVideoRenderer);
-
-	VideoAddFilter(CLSID_AudioRender, L"Audio render", &pAudioRender);
-	VideoConnectFilter(pLavAudioDecoder, pAudioRender);
-
+void CMainWnd::OnBtnStop()
+{
+	if (m_pLavSplitterSource)
+	{
+		VideoPlayStop();
+		VideoDelFilter(m_pAudioRender);
+		VideoDelFilter(m_pVideoRenderer);
+		VideoDelFilter(m_pLavAudioDecoder);
+		VideoDelFilter(m_pLavVideoDecoder);
+		VideoDelFilter(m_pLavSplitterSource);
+		m_pLavSplitterSource = NULL;		
+		m_pLavVideoDecoder = NULL;
+		m_pLavAudioDecoder = NULL;
+		m_pVideoRenderer = NULL;
+		m_pAudioRender = NULL;
+	}
 	
-	VideoPlayRun();
-
-	
-
-	//VideoPlayStart(_T("d:\\1.rmvb"));
 }
 
 void CMainWnd::OnBtnLayeredWindow()

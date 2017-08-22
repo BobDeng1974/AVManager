@@ -34,7 +34,11 @@ VIDEO_API void  SnapshotBitmap(LPCTSTR lpFile);
 
 VIDEO_API void	VideoAddFilter(const GUID& clsid, LPCWCHAR wszName, IBaseFilter **ppF);
 
+VIDEO_API void VideoDelFilter(IBaseFilter *pF);
+
 VIDEO_API void	VideoConnectFilter(IBaseFilter *pSrc, IBaseFilter *pDest);
+
+VIDEO_API void	VideoDisConnectFilter(IBaseFilter *pSrc, IBaseFilter *pDest);
 
 //Capture
 VIDEO_API void	VideoCaptureInit(HWND hWnd);

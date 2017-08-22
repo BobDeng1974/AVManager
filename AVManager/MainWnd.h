@@ -7,6 +7,7 @@
 class CMainWnd : public WindowImplBase
 {
 public:
+	CMainWnd();
 	virtual CDuiString GetSkinFolder();
 	virtual CDuiString GetSkinFile();
 	virtual LPCTSTR GetWindowClassName(void) const;
@@ -21,6 +22,7 @@ public:
 	void OnFileList();
 	void OnOpenFile();
 	void OnBtnPlayVideo();
+	void OnBtnStop();
 	void OnBtnLayeredWindow();
 
 private:
@@ -32,6 +34,13 @@ private:
 	CFileListUI * m_pFileListUI;
 
 	map<tstring, tstring> m_mFileList;
+
+	IBaseFilter *m_pLavSplitterSource;
+	IFileSourceFilter *m_pFileSourceFilter;
+	IBaseFilter *m_pLavVideoDecoder;
+	IBaseFilter *m_pLavAudioDecoder;
+	IBaseFilter *m_pVideoRenderer;
+	IBaseFilter *m_pAudioRender;
 };
 
 #endif

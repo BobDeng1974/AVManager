@@ -78,7 +78,17 @@ void	VideoAddFilter(const GUID& clsid, LPCWCHAR wszName, IBaseFilter **ppF)
 	CVideoPlay::GetInstance()->AddFilterByCLSID(clsid, wszName, ppF);
 }
 
+void VideoDelFilter(IBaseFilter *pF)
+{
+	CVideoPlay::GetInstance()->DelFilter(pF);
+}
+
 void	VideoConnectFilter(IBaseFilter *pSrc, IBaseFilter *pDest)
 {
 	CVideoPlay::GetInstance()->ConnectFilters(pSrc, pDest);
+}
+
+void	VideoDisConnectFilter(IBaseFilter *pSrc, IBaseFilter *pDest)
+{
+	CVideoPlay::GetInstance()->DisconnectFilters(pSrc, pDest);
 }

@@ -562,6 +562,18 @@ HRESULT CVideoPlay::AddFilterByCLSID(const GUID& clsid, LPCWCHAR wszName, IBaseF
 			pF->Release();
 	}
 	return hr;
+
+
+
+	
+}
+
+HRESULT CVideoPlay::DelFilter(IBaseFilter *pF)
+{
+	HRESULT hr = m_pGraph->RemoveFilter(pF);
+	if (FAILED(hr)) return hr;
+	pF->Release();
+	return 0;
 }
 
 HRESULT CVideoPlay::GetUnconectedPin(IBaseFilter *pFilter, PIN_DIRECTION PinDir, IPin **ppPin)
@@ -591,6 +603,40 @@ HRESULT CVideoPlay::GetUnconectedPin(IBaseFilter *pFilter, PIN_DIRECTION PinDir,
 			}
 			else
 			{
+				pEnum->Release();
+				*ppPin = pPin;
+				return S_OK;
+			}
+		}
+		pPin->Release();
+	}
+	pEnum->Release();
+	return E_FAIL;
+}
+
+HRESULT CVideoPlay::GetConectedPin(IBaseFilter *pFilter, PIN_DIRECTION PinDir, IPin **ppPin)
+{
+	*ppPin = 0;
+	IEnumPins *pEnum = 0;
+	IPin *pPin = 0;
+
+	HRESULT hr = pFilter->EnumPins(&pEnum);
+	if (FAILED(hr))
+	{
+		return hr;
+	}
+	hr = pEnum->Reset();
+	while (pEnum->Next(1, &pPin, NULL) == S_OK)
+	{
+		PIN_DIRECTION ThisPinDirection;
+		pPin->QueryDirection(&ThisPinDirection);
+		if (ThisPinDirection == PinDir)
+		{
+			IPin *pTemp = 0;
+			hr = pPin->ConnectedTo(&pTemp);
+			if (SUCCEEDED(hr))
+			{
+				//当前pin已经连接；
 				pEnum->Release();
 				*ppPin = pPin;
 				return S_OK;
@@ -635,5 +681,29 @@ HRESULT CVideoPlay::ConnectFilters(IBaseFilter *pSrc, IBaseFilter *pDest)
 		return hr;
 	hr = ConnectFilters(pOut, pDest);
 	pOut->Release();
+	return hr;
+}
+
+HRESULT CVideoPlay::DisconnectFilters(IBaseFilter *pSrc, IBaseFilter *pDest)
+{
+	if ((m_pGraph == NULL) || (pDest == NULL) || (pSrc == NULL))
+		return E_POINTER;
+	
+	// 输出pin
+	IPin *pOut = 0;
+	HRESULT hr = GetConectedPin(pSrc, PINDIR_OUTPUT, &pOut);
+	if (FAILED(hr))	return hr;
+	hr = m_pGraph->Disconnect(pOut);
+	if (FAILED(hr))	return hr;
+	pOut->Release();
+
+	// 输入pin
+	IPin *pIn = 0;
+	hr = GetConectedPin(pDest, PINDIR_INPUT, &pIn);
+	if (FAILED(hr)) return hr;
+	hr = m_pGraph->Disconnect(pIn);
+	if (FAILED(hr))	return hr;
+	pIn->Release();
+	
 	return hr;
 }
