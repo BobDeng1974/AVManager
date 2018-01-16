@@ -16,21 +16,33 @@
 #include <tchar.h>
 #include <vector>
 #include <map>
+#include <conio.h>
+#include <new.h>
+#include <signal.h>
+#include <exception>
+#include <sys/stat.h>
+#include <psapi.h>
+#include <rtcapi.h>
+#include <Shellapi.h>
+#include <dbghelp.h>
 #include <DShow.h>
-#include <types.h>
 
+#include "types.h"
 #include "AUDIO_SDK.h"
 #include "VIDEO_SDK.H"
 // TODO: 在此处引用程序需要的其他头文件
 
 
 #include <Initguid.h>
-
 #include "..\DuiLib\UIlib.h"
 
+
+// using namespace
 using namespace DuiLib;
 using namespace std;
 
+
+// lib
 #ifdef _DEBUG
 #   ifdef _UNICODE
 #       pragma comment(lib, "..\\Lib\\DuiLib_ud.lib")
@@ -48,8 +60,5 @@ using namespace std;
 
 #pragma comment(lib,"Audio.lib")
 #pragma comment(lib,"Video.lib")
-
-
-//lib
 #pragma comment (lib,"Strmiids")
 #pragma comment (lib,"quartz")

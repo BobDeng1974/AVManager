@@ -111,15 +111,6 @@ LRESULT CMainWnd::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled
 {
 	int width = LOWORD(lParam);
 	int height = HIWORD(lParam);
-	BOOL b = m_pVerFileList->IsVisible();
-	if (b)
-	{
-		SetWindowPos(m_VideoWnd, NULL, 178, 60, width - 178, height - 60 - 76, SWP_SHOWWINDOW);
-	}
-	else
-	{
-		SetWindowPos(m_VideoWnd, NULL, 0, 60, width, height - 60 - 76, SWP_SHOWWINDOW);
-	}
 	WindowImplBase::OnSize(uMsg, wParam, lParam, bHandled);
 	return 0;
 }
@@ -192,7 +183,7 @@ void CMainWnd::OnBtnPlayVideo()
 		hr = m_pLavSplitterSource->QueryInterface(IID_IFileSourceFilter, (void **)&m_pFileSourceFilter);
 		if (hr == S_OK)
 		{
-			hr = m_pFileSourceFilter->Load(_T("d:\\1.mov"), NULL);
+			hr = m_pFileSourceFilter->Load(_T("F:\\迅雷下载\\这个男人来自地球BD中英双字.rmvb"), NULL);
 			if (hr == S_OK)
 			{
 

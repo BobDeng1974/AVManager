@@ -1,8 +1,14 @@
 #include "stdafx.h"
 #include "MainWnd.h"
+#include "CrashHandler.h"
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
+
+	CCrashHandler handler;
+	handler.SetProcessExceptionHandlers();
+	//handler.SetThreadExceptionHandlers();
+
 	CPaintManagerUI::SetInstance(hInstance);
 	CPaintManagerUI::SetResourcePath(CPaintManagerUI::GetInstancePath());
 

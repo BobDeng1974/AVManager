@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CrashHandler.h" />
     <ClInclude Include="FileListUI.h" />
     <ClInclude Include="LovingWnd.h" />
     <ClInclude Include="MainWnd.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="VideoWnd.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CrashHandler.cpp" />
     <ClCompile Include="FileListUI.cpp" />
     <ClCompile Include="LovingWnd.cpp" />
     <ClCompile Include="main.cpp" />

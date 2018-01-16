@@ -33,6 +33,9 @@
     <ClInclude Include="FileListUI.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CrashHandler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +51,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FileListUI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
