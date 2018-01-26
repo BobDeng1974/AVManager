@@ -26,6 +26,7 @@
 #include <Shellapi.h>
 #include <dbghelp.h>
 #include <DShow.h>
+#include <Wininet.h>
 
 #include "types.h"
 #include "AUDIO_SDK.h"
@@ -62,3 +63,5 @@ using namespace std;
 #pragma comment(lib,"Video.lib")
 #pragma comment (lib,"Strmiids")
 #pragma comment (lib,"quartz")
+#pragma comment(lib, "Wininet")
+#pragma comment(lib, "version")

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <Window size="700,550" caption="0,0,0,60" roundcorner="3,3">
     <VerticalLayout width="700" height="550" bkcolor="#FFFFFFFF">
         <HorizontalLayout  height="60" bkcolor="#FF232624" inset="5,2,0,0">
@@ -22,7 +22,7 @@
 			<Button name="btn_pre" text="上一曲" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
 			<Button name="btn_play_video" text="播放" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
 			<Button name="btn_next" text="下一曲" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
-			<!--<Button name="btn_layered_window" visible="false" text="透明窗口" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />-->
+			<Button name="btn_layered_window" visible="true" text="透明窗口" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" />
 			<HorizontalLayout childpadding="10" width="228">
 				<Button name="btn_audio" text="" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_microphone.png' corner='0,0,0,0' source='0,0,512,512' dest='0,14,56,58'" />
 				<Button name="btn_video" text="" width="56" height="72" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\btn_main_video.png' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\btn_main_video.png' corner='0,0,0,0' source='56,0,112,72'" />
