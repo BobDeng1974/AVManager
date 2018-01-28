@@ -12,6 +12,9 @@ public:
 
 	BOOL	FloderIsExist(LPCTSTR lpPath);
 	BOOL	FileIsExist(LPCTSTR lpPath);
+	tstring GetFileName(LPCTSTR lpPath);
+	tstring GetExtName(LPCTSTR lpPath);
+	int64_t	GetFileSize(LPCTSTR lpFileName);
 
 	// ×Ö·û´®×ª»»
 	tstring AnsiStringToUnicodeString(const char* pIn);

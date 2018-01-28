@@ -45,6 +45,34 @@ BOOL CUtils::FileIsExist(LPCTSTR lpPath)
 	return RetValue;
 }
 
+tstring CUtils::GetFileName(LPCTSTR lpPath)
+{
+	const TCHAR *pos, *pos1, *pos2;
+	pos1 = _tcsrchr(lpPath, '\\');
+	pos2 = _tcsrchr(lpPath, '/');
+	pos = pos1 > pos2 ? pos1 : pos2;
+
+	return pos == NULL ? lpPath : &pos[1];
+}
+
+tstring CUtils::GetExtName(LPCTSTR lpPath)
+{
+	const TCHAR* pos = _tcsrchr(lpPath, '.');
+
+	return pos == NULL ? _T("") : &pos[1];
+}
+
+int64_t CUtils::GetFileSize(LPCTSTR lpFileName)
+{
+	HANDLE hFile = NULL;
+	LARGE_INTEGER large;
+	hFile = ::CreateFile(lpFileName, GENERIC_READ, 0, NULL, OPEN_EXISTING,
+		NULL, NULL);
+	if (hFile == INVALID_HANDLE_VALUE) return -1;
+	GetFileSizeEx(hFile, &large);
+	CloseHandle(hFile);
+	return large.QuadPart;
+}
 
 tstring CUtils::GetAppVersionInfo(LPCTSTR lpFileName)
 {
