@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Video", "Video\Video.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AVManager", "AVManager\AVManager.vcxproj", "{ECC8D608-6C5B-4E74-BF75-D62A10F3A644}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UpGrade", "UpGrade\UpGrade.vcxproj", "{CC69C069-5A1E-4E6E-B30F-5218F29E1789}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -71,6 +73,18 @@ Global
 		{ECC8D608-6C5B-4E74-BF75-D62A10F3A644}.UnicodeRelease|Win32.ActiveCfg = Release|Win32
 		{ECC8D608-6C5B-4E74-BF75-D62A10F3A644}.UnicodeRelease|Win32.Build.0 = Release|Win32
 		{ECC8D608-6C5B-4E74-BF75-D62A10F3A644}.UnicodeRelease|x64.ActiveCfg = Release|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.Debug|Win32.Build.0 = Debug|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.Debug|x64.ActiveCfg = Debug|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.Release|Win32.ActiveCfg = Release|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.Release|Win32.Build.0 = Release|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.Release|x64.ActiveCfg = Release|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.UnicodeDebug|Win32.ActiveCfg = Debug|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.UnicodeDebug|Win32.Build.0 = Debug|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.UnicodeDebug|x64.ActiveCfg = Debug|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.UnicodeRelease|Win32.ActiveCfg = Release|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.UnicodeRelease|Win32.Build.0 = Release|Win32
+		{CC69C069-5A1E-4E6E-B30F-5218F29E1789}.UnicodeRelease|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

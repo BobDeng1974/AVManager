@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Window size="800,600" caption="0,0,0,30" roundcorner="3,3">
+	<Font shared="true" id="1" name="微软雅黑" size="14" />
+	<Font shared="true" id="2" name="微软雅黑" size="16" />
+	<VerticalLayout bkcolor="#FF232624">
+		<HorizontalLayout pos="0,0,800,30" inset="5,2,0,0">
+			<Label pos="0,0,110,30" text="升级程序" textcolor="#FFFE7700" disabledtextcolor="#FFA7A6AA"/>
+			<Control />
+			<Button width="24" height="24" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" name="btn_close" normalimage="file='skin\btn_close.png' corner='0,0,0,0' source='0,0,24,24'" hotimage="file='skin\btn_close.png' corner='0,0,0,0' source='24,0,48,24'" />
+		</HorizontalLayout>
+		<HorizontalLayout />
+		<HorizontalLayout height="50" inset="0,10,10,0">
+			<Control />
+			<Button name="btn_upgrade" text="现在升级" width="70" height="30" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" font="2"/>
+			<Button name="btn_no_upgrade" text="暂不升级" width="70" height="30" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'"  font="2"/>
+		</HorizontalLayout> 
+	</VerticalLayout>
+</Window>
+
