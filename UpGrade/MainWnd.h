@@ -10,7 +10,6 @@ public:
 	virtual CDuiString GetSkinFile();
 	virtual LPCTSTR GetWindowClassName(void) const;
 	virtual void InitWindow();
-	virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
 	void Notify(TNotifyUI& msg);
 	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled);
@@ -20,15 +19,19 @@ public:
 	CControlUI* CreateControl(LPCTSTR pstrClass);
 
 	void		CheckProcess();
+	void		DownLoadFile();
 	void		OnUpgrade();
 	void		OnNoUpgrade();
-	wstring GetAppVersionInfo(LPCTSTR lpFileName);
 	static  unsigned int  _stdcall ThreadProc(void* param);
 private:
-	wstring m_strLocalFile;
-	wstring m_strConfigFile;
-	wstring m_strCurVersion;
-	wstring m_strNewVersion;
+	tstring m_strPath;
+	tstring m_strAppFile;
+	tstring m_strConfigUrl;
+	tstring m_strCurVersion;
+	tstring m_strNewVersion;
+
+	CButtonUI *m_pBtnUpgrade;
+	CButtonUI *m_pBtnNoUpgrade;
 };
 
 #endif

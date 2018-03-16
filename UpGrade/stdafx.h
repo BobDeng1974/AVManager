@@ -11,11 +11,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
+#include <Wininet.h>
 
 #include "types.h"
 #include "..\DuiLib\UIlib.h"
-
-
 // using namespace
 using namespace DuiLib;
 using namespace std;
@@ -35,3 +34,8 @@ using namespace std;
 #       pragma comment(lib, "..\\Lib\\DuiLib.lib")
 #   endif
 #endif
+
+
+#pragma comment(lib,"version.lib") 
+#pragma comment(lib, "Wininet")
+#pragma comment(lib,"Shell32.lib") 

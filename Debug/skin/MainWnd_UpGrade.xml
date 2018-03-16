@@ -11,7 +11,7 @@
 		<HorizontalLayout />
 		<HorizontalLayout height="50" inset="0,10,10,0">
 			<Control />
-			<Button name="btn_upgrade" text="现在升级" width="70" height="30" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" font="2"/>
+			<Button name="btn_upgrade" text="现在升级" visible="true" width="70" height="30" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'" font="2"/>
 			<Button name="btn_no_upgrade" text="暂不升级" width="70" height="30" textcolor="#00848487" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file='skin\' corner='0,0,0,0' source='0,0,56,72'" hotimage="file='skin\' corner='0,0,0,0' source='56,0,112,72'"  font="2"/>
 		</HorizontalLayout> 
 	</VerticalLayout>

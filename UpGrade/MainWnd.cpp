@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "MainWnd.h"
+#include "Utils.h"
+#include "WininetHttp.h"
 #include <process.h>
+#include <commdlg.h>
+#include<Shlobj.h>  
+
+
 CMainWnd::CMainWnd()
 {
 }
@@ -30,12 +36,31 @@ CControlUI* CMainWnd::CreateControl(LPCTSTR pstrClass)
 
 void CMainWnd::InitWindow()
 {
-	m_strLocalFile = _T("C:\\");
-	m_strConfigFile = _T("www");
-	m_strCurVersion = GetAppVersionInfo(_T(""));
+	m_pBtnUpgrade = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_upgrade")));
+	m_pBtnNoUpgrade = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_no_upgrade")));
+
+	CUtils util;
+	// 工作目录
+	m_strPath = util.GetCurDirectory(); 
+	m_strAppFile = m_strPath + _T("AVManager.exe");
+
+	// 本地安装文件路径、网络配置文件url
+	TCHAR szConfigUrl[MAX_PATH] = { 0 };
+	tstring strConfigPath = m_strPath + _T("upgrade");
+	tstring strIniFile = m_strPath + _T("\\upgrade\\upgrade.ini");
+	if (!util.FloderIsExist(strConfigPath.c_str()))
+	{ 
+		CreateDirectory(strConfigPath.c_str(), NULL);
+	}	
+	GetPrivateProfileString(_T("APPUPGRADE"), _T("LocalInstallFile"), _T(""), szConfigUrl, MAX_PATH, strIniFile.c_str());
+	
+	m_strConfigUrl = szConfigUrl;
+	if (m_strConfigUrl.empty()) m_strConfigUrl = _T("");
+	m_strCurVersion = util.GetAppVersionInfo(m_strPath.c_str());
 	m_strNewVersion = _T("");
+
 	unsigned int iThreadID = 0;
-	CloseHandle((HANDLE)_beginthreadex(NULL, 0, ThreadProc, this, 0, &iThreadID));
+	//CloseHandle((HANDLE)_beginthreadex(NULL, 0, ThreadProc, this, 0, &iThreadID));
 }
 
 void CMainWnd::Notify(TNotifyUI& msg)
@@ -78,62 +103,49 @@ unsigned int  _stdcall CMainWnd::ThreadProc(void* param)
 
 void CMainWnd::CheckProcess()
 {
-	//	本地存在下载好的文件，
-	if (!m_strLocalFile.empty())
+	CUtils util;
+	tstring strDownLoadUrl = _T("");
+
+	// 获取Configurattion
+	string strResponse;
+	CWininetHttp http;
+	strResponse = http.Request(m_strConfigUrl.c_str(), HttpRequest::Hr_Get);
+
+	// 最新版本和当前版本相等
+	if (m_strCurVersion == m_strNewVersion)
 	{
 
 	}
 	else
 	{
+		m_pBtnUpgrade->SetVisible(TRUE);
+	}
+	
+}
 
+void		CMainWnd::DownLoadFile()
+{
+	TCHAR szBuffer[MAX_PATH] = { 0 };
+	BROWSEINFO bi = { 0 };
+	bi.hwndOwner = NULL;//拥有着窗口句柄，为NULL表示对话框是非模态的，实际应用中一般都要有这个句柄  
+	bi.pszDisplayName = szBuffer;//接收文件夹的缓冲区  
+	bi.lpszTitle = TEXT("选择一个文件夹");//标题  
+	bi.ulFlags = BIF_NEWDIALOGSTYLE;
+	LPITEMIDLIST idl = SHBrowseForFolder(&bi);
+	if (SHGetPathFromIDList(idl, szBuffer)){
+		MessageBox(NULL, szBuffer, TEXT("你选择的文件夹"), 0);
+	}
+	else{
+		MessageBox(NULL, TEXT("请选择一个文件夹"), NULL, MB_ICONERROR);
 	}
 }
 
 void		CMainWnd::OnUpgrade()
 {
-
+	DownLoadFile();
 }
 
 void		CMainWnd::OnNoUpgrade()
 {
 
-}
-
-wstring    CMainWnd::GetAppVersionInfo(LPCTSTR lpFileName)
-{
-	
-	TCHAR strVersion[256] = {0};
-	TCHAR strFile[MAX_PATH];
-	memset(strFile, 0, MAX_PATH);
-
-	if (lpFileName == NULL)
-	{
-		GetModuleFileName(NULL, strFile, MAX_PATH);
-	}
-	else
-	{
-		memcpy(strFile, lpFileName, _tcslen(lpFileName) * 2);
-	}
-
-	TCHAR szVersionBuffer[1024];
-	DWORD dwVerSize;
-	DWORD dwHandle;
-	memset(szVersionBuffer, 0, sizeof(TCHAR)* 1024);
-
-	dwVerSize = GetFileVersionInfoSize(strFile, &dwHandle);
-	if (dwVerSize == 0)
-		return _T("");
-
-	if (GetFileVersionInfo(strFile, 0, dwVerSize, szVersionBuffer))
-	{
-		VS_FIXEDFILEINFO * pInfo;
-		unsigned int nInfoLen;
-
-		if (VerQueryValue(szVersionBuffer, _T("\\"), (void**)&pInfo, &nInfoLen))
-		{
-			wsprintf(strVersion, _T("%d.%d.%d.%d"), HIWORD(pInfo->dwFileVersionMS), LOWORD(pInfo->dwFileVersionMS),
-				HIWORD(pInfo->dwFileVersionLS), LOWORD(pInfo->dwFileVersionLS));
-		}
-	}
-	return strVersion;
 }

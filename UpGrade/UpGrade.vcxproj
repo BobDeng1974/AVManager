@@ -78,10 +78,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="IHttpInterface.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="WininetHttp.h" />
     <ClInclude Include="MainWnd.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="WininetHttp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWnd.cpp" />
   </ItemGroup>
